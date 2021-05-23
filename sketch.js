@@ -3,10 +3,11 @@ var backgr, backgrImg;
 var Obstacles_Group, obstacleImg;
 var welcome_screen;
 var cheetah, cheetah_running, cheeetah_collided;
-var ground, invisibleground;
+var ground, invisibleGround;
 var HOME= 0;
 var PLAY= 1;
 var END= 2;
+var score;
 var gameState = HOME; 
 
 function preload() {
@@ -17,27 +18,49 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(1570,770); 
+  createCanvas(displayWidth, displayHeight); 
 
-  cheetah = createSprite(180,590);
+  ground= createSprite(displayWidth/2,displayHeight/2-400);
+  ground.addImage(backgrImg);
+  ground.scale= 4.6;
+  ground.x = ground.width / 2;
+  ground.velocityX = -4;
+
+  invisibleGround = createSprite(width/2, 680, width, 15);
+  invisibleGround.visible = false;
+
+  cheetah = createSprite(200,590);
   cheetah.addAnimation("runner",cheetah_running);
   cheetah.scale = 1.5;
 }
 
 function draw() {
-    background("white")
+    background("white");
 
+    cheetah.collide(invisibleGround);
+
+    text("Score: " + score, displayWidth/2+200, displayHeight/2-100);
+    console.log(cheetah.y);
     if(gameState === HOME) {
       background(welcome_screen);
+      ground.visible = false;
       cheetah.visible = false;
       if(keyDown("Space")) {
         gameState = PLAY;
       }
     }
     if(gameState === PLAY) {
-      background(backgrImg);
-
+      ground.visible = true;
+      if (ground.x < 200) {
+        ground.x = ground.width/2;
+      }
+      
       cheetah.visible= true;
+      /*if (keyDown("space") && cheetah.y >= 159) {
+        cheetah.velocityY = -13;
+      }
+  
+      cheetah.velocityY = cheetah.velocityY + 0.8; */
     }
     
   drawSprites();
