@@ -38,6 +38,8 @@ function setup() {
   cheetah = createSprite(displayWidth/2-600,displayHeight/2-50);
   cheetah.addAnimation("runner",cheetah_running);
   cheetah.scale = 1.4;
+  cheetah.setCollider("rectangle", 0, 0, 200, 90, 0);
+  //cheetah.debug= true;
 }
 
 function draw() {
@@ -88,7 +90,7 @@ function draw() {
 
 function spawnObstacles() {
   if (frameCount % 250 === 0) {
-    var obstacle = createSprite(displayWidth/2+800, displayHeight/2,);
+    var obstacle = createSprite(displayWidth/2+800, displayHeight/2);
     obstacle.velocityX = -20;
     obstacle.velocityY = 20;
     
@@ -98,6 +100,8 @@ function spawnObstacles() {
     obstacle.scale = 1.4;
     obstacle.lifetime = 300;
 
+    //obstacle.debug=true;
+    
     Obstacles_Group.add(obstacle);
   }
 } 
